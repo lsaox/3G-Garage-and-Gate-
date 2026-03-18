@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3G Garage & Gate Services</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: "#f4bf17",
+            purple: "#6d28d9",
+            ink: "#050505"
+          },
+          fontFamily: {
+            orbitron: ["Orbitron", "sans-serif"],
+            sans: ["Inter", "system-ui", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      color: white;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      background: transparent;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    #bgBase{
+      position: fixed;
+      inset: 0;
+      z-index: -30;
+      pointer-events: none;
+      background: #050505;
+    }
+
+    #bgPurple{
+      position: fixed;
+      inset: 0;
+      z-index: -20;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .18s linear;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(109,40,217,0.30), transparent 30%),
+        radial-gradient(circle at 78% 36%, rgba(109,40,217,0.16), transparent 25%),
+        linear-gradient(180deg, rgba(35,12,68,0.22), rgba(5,5,5,0) 46%);
+    }
+
+    #bgGold{
+      position: fixed;
+      inset: 0;
+      z-index: -10;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .18s linear;
+      background:
+        radial-gradient(circle at 50% 78%, rgba(244,191,23,0.22), transparent 30%),
+        radial-gradient(circle at 82% 88%, rgba(244,191,23,0.12), transparent 24%),
+        linear-gradient(180deg, rgba(45,28,0,0), rgba(45,28,0,0.28) 70%, rgba(5,5,5,0));
+    }
+
+    .top-logo {
+      width: 42px;
+      height: auto;
+      display: block;
+    }
+
+    .hero-logo {
+      width: 100%;
+      max-width: 240px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      position: relative;
+      animation: logoFloatIn 1s cubic-bezier(.22,1,.36,1) both;
+      filter: drop-shadow(0 0 26px rgba(244,191,23,.10)) drop-shadow(0 0 34px rgba(109,40,217,.14));
+    }
+
+    .hero-logo-wrap {
+      position: relative;
+      display: inline-block;
+      overflow: hidden;
+    }
+
+    .hero-logo-wrap::after {
+      content: "";
+      position: absolute;
+      top: -10%;
+      bottom: -10%;
+      left: -22%;
+      width: 22%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255,255,255,0.04) 20%,
+        rgba(255,255,255,0.025) 48%,
+        rgba(255,255,255,0.04) 78%,
+        transparent 100%
+      );
+      transform: skewX(-20deg);
+      animation: chromeSweep 4.8s ease-in-out infinite 1.3s;
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+    }
+
+    .hero-copy {
+      width: 100%;
+      max-width: 820px;
+      margin-inline: auto;
+    }
+
+    .pill-call {
+      border: 1px solid rgba(80,255,140,0.35);
+      box-shadow:
+        0 0 0 1px rgba(80,255,140,0.08) inset,
+        0 0 18px rgba(80,255,140,0.08);
+    }
+
+    .btn-gold {
+      background: linear-gradient(180deg, #ffd451 0%, #f4bf17 60%, #d7a300 100%);
+      color: #050505;
+      border: 1px solid rgba(255,232,150,0.35);
+      box-shadow: 0 18px 40px rgba(244,191,23,0.18);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 46px rgba(244,191,23,0.25);
+    }
+
+    .btn-purple {
+      background: linear-gradient(180deg, rgba(109,40,217,0.20), rgba(76,29,149,0.18));
+      color: white;
+      border: 1px solid rgba(139,92,246,0.32);
+      box-shadow: 0 18px 40px rgba(109,40,217,0.16);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .btn-purple:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 46px rgba(109,40,217,0.25);
+    }
+
+    .glass {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .hero-image-wrap {
+      position: relative;
+      min-height: 480px;
+      width: 100%;
+      animation: fadeRightIn 1s cubic-bezier(.22,1,.36,1) .2s both;
+    }
+
+    .hero-image-angled {
+      position: relative;
+      width: 100%;
+      min-height: 480px;
+      border: 1px solid rgba(255,255,255,0.08);
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.16), rgba(0,0,0,0.60)),
+        url("assets/image.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+      clip-path: polygon(12% 0, 100% 0, 100% 86%, 88% 100%, 0 100%, 0 14%);
+    }
+
+    .hero-image-angled::after {
+      content: "";
+      position: absolute;
+      inset: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      clip-path: polygon(12% 0, 100% 0, 100% 86%, 88% 100%, 0 100%, 0 14%);
+      pointer-events: none;
+    }
+
+    .hero-cut-card {
+      position: absolute;
+      left: -34px;
+      bottom: 36px;
+      max-width: 420px;
+      z-index: 3;
+      animation: fadeUpIn 1s cubic-bezier(.22,1,.36,1) .45s both;
+    }
+
+    .hero-cut-card-inner {
+      background: rgba(8,8,10,0.90);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.08);
+      clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%, 0 16%);
+    }
+
+    .mobile-menu {
+      transition: opacity .28s ease, visibility .28s ease;
+    }
+
+    .mobile-menu.hidden-menu {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .mobile-menu.show-menu {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1);
+    }
+
+    .fade-up.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .service-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: transform .28s ease, border-color .28s ease, box-shadow .28s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(244,191,23,0.20);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.30);
+    }
+
+    .about-panel {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .chrome-line {
+      height: 1px;
+      width: 100%;
+      background: linear-gradient(90deg, transparent, rgba(244,191,23,.55), rgba(109,40,217,.55), transparent);
+    }
+
+    .stagger-1 { animation: fadeLeftIn .9s cubic-bezier(.22,1,.36,1) .12s both; }
+    .stagger-2 { animation: fadeLeftIn .9s cubic-bezier(.22,1,.36,1) .24s both; }
+    .stagger-3 { animation: fadeLeftIn .9s cubic-bezier(.22,1,.36,1) .36s both; }
+    .stagger-4 { animation: fadeLeftIn .9s cubic-bezier(.22,1,.36,1) .48s both; }
+
+    @keyframes chromeSweep {
+      0%   { transform: translateX(-180%) skewX(-20deg); opacity: 0; }
+      10%  { opacity: 1; }
+      45%  { transform: translateX(520%) skewX(-20deg); opacity: 1; }
+      60%  { opacity: 0; }
+      100% { transform: translateX(520%) skewX(-20deg); opacity: 0; }
+    }
+
+    @keyframes logoFloatIn {
+      0% {
+        opacity: 0;
+        transform: translateY(24px) scale(.96);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes fadeLeftIn {
+      0% {
+        opacity: 0;
+        transform: translateX(-26px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes fadeRightIn {
+      0% {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes fadeUpIn {
+      0% {
+        opacity: 0;
+        transform: translateY(28px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .hero-logo {
+        max-width: 220px;
+      }
+
+      .hero-copy {
+        max-width: 760px;
+      }
+
+      .hero-image-wrap {
+        min-height: 420px;
+      }
+
+      .hero-image-angled {
+        min-height: 420px;
+      }
+
+      .hero-cut-card {
+        left: 18px;
+        right: 18px;
+        bottom: 18px;
+        max-width: 360px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .top-logo {
+        width: 38px;
+      }
+
+      .hero-logo {
+        max-width: 210px;
+      }
+
+      .hero-copy {
+        max-width: 100%;
+      }
+
+      .hero-image-wrap {
+        min-height: 340px;
+      }
+
+      .hero-image-angled {
+        min-height: 340px;
+        clip-path: polygon(8% 0, 100% 0, 100% 90%, 92% 100%, 0 100%, 0 10%);
+      }
+
+      .hero-image-angled::after {
+        inset: 10px;
+        clip-path: polygon(8% 0, 100% 0, 100% 90%, 92% 100%, 0 100%, 0 10%);
+      }
+
+      .hero-cut-card {
+        left: 14px;
+        right: 14px;
+        bottom: 14px;
+        max-width: none;
+      }
+    }
+  </style>
+</head>
+<body class="bg-ink text-white">
+
+  <div id="bgBase"></div>
+  <div id="bgPurple"></div>
+  <div id="bgGold"></div>
+
+  <section class="relative min-h-screen overflow-hidden">
+
+    <header class="relative z-40">
+      <div class="max-w-7xl mx-auto px-6 md:px-10 py-5 relative flex items-center">
+
+        <a href="#" class="relative z-50 block">
+          <img src="assets/logo.svg" alt="3G logo" class="top-logo">
+        </a>
+
+        <nav class="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-10 text-[12px] uppercase tracking-[0.24em] text-white/75">
+          <a href="#" class="hover:text-gold transition">Home</a>
+          <a href="#about" class="hover:text-gold transition">About</a>
+          <a href="#services" class="hover:text-gold transition">Services</a>
+           <a href="Gallery.html" class="hover:text-gold transition">Gallery</a>
+        </nav>
+
+        <div class="hidden md:flex ml-auto items-center gap-4">
+          <a href="tel:4696495993" class="pill-call rounded-full px-5 py-2.5 text-xs uppercase tracking-[0.18em] text-white/90">
+            469-649-5993
+          </a>
+          <a href="contact.html" class="btn-gold rounded-full px-5 py-2.5 text-xs font-bold uppercase tracking-[0.18em]">
+            Book Now
+          </a>
+        </div>
+
+        <div class="md:hidden ml-auto flex items-center gap-3">
+          <a href="tel:4696495993" class="pill-call rounded-full px-3 py-2 text-[10px] uppercase tracking-[0.18em] text-white/90">
+            Call
+          </a>
+
+          <button id="menuBtn" class="glass w-11 h-11 rounded-full flex items-center justify-center" aria-label="Open menu">
+            <div class="flex flex-col gap-1.5">
+              <span class="block w-5 h-[2px] bg-white"></span>
+              <span class="block w-5 h-[2px] bg-white"></span>
+              <span class="block w-5 h-[2px] bg-white"></span>
+            </div>
+          </button>
+        </div>
+
+      </div>
+    </header>
+
+    <div id="mobileMenu" class="mobile-menu hidden-menu fixed inset-0 z-50 bg-black/95">
+      <div class="w-full h-full flex flex-col items-center justify-center text-center px-6">
+        <nav class="flex flex-col gap-8 font-orbitron uppercase tracking-[0.22em] text-2xl">
+          <a href="#" class="mobile-link hover:text-gold transition">Home</a>
+          <a href="#about" class="mobile-link hover:text-gold transition">About</a>
+          <a href="#services" class="mobile-link hover:text-gold transition">Services</a>
+          <a href="contact.html" class="mobile-link hover:text-gold transition">Contact</a>
+          <a href="tel:4696495993" class="mobile-link text-purple hover:text-gold transition">469-649-5993</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-10 pt-4 pb-14 md:pb-18">
+      <div class="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-10 lg:gap-14 items-center min-h-[78vh]">
+
+        <!-- LEFT -->
+        <div class="order-2 lg:order-1 hero-left">
+          <div class="hero-logo-wrap">
+            <img src="assets/logo.svg" alt="3G Garage and Gate Services" class="hero-logo">
+          </div>
+
+          <div class="hero-copy">
+            <p class="mt-6 font-orbitron uppercase tracking-[0.22em] text-purple text-sm sm:text-base md:text-lg font-bold stagger-1">
+              Garage and Gate Services
+            </p>
+
+            <h1 class="mt-5 font-orbitron text-4xl sm:text-5xl xl:text-6xl leading-[0.92] font-black stagger-2">
+              Secure Access.
+              <span class="text-gold block">Fast Repairs.</span>
+            </h1>
+
+            <p class="mt-6 text-white/72 text-base md:text-lg leading-relaxed stagger-3">
+              Professional garage door and gate repair with a strong modern look, clear communication, and dependable service from first call to finish.
+            </p>
+
+            <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center stagger-4">
+              <a href="contact.html" class="btn-gold rounded-full px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-center">
+                Book Service
+              </a>
+              <a href="tel:4696495993" class="btn-purple rounded-full px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-center">
+                Call Now
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="order-1 lg:order-2">
+          <div class="hero-image-wrap">
+            <div class="hero-image-angled"></div>
+
+            <div class="hero-cut-card">
+              <div class="hero-cut-card-inner p-6 md:p-7">
+                <p class="text-white/55 text-[11px] uppercase tracking-[0.24em] mb-3">
+                  DFW Service
+                </p>
+
+                <h3 class="font-orbitron text-2xl md:text-3xl xl:text-[3rem] font-black leading-[1.05]">
+                  Garage Doors
+                  <br>
+                  Gates &
+                  <br>
+                  Installs
+                </h3>
+
+                <a href="tel:4696495993" class="inline-block mt-6 btn-gold rounded-full px-8 py-4 text-xs font-bold uppercase tracking-[0.18em]">
+                  469-649-5993
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ABOUT US -->
+  <section id="about" class="relative py-20 md:py-24 overflow-hidden">
+
+  <!-- Background Image -->
+  <div class="absolute inset-0">
+    <img 
+      src="assets/aboutback.jpg"
+      alt="Garage background"
+      class="w-full h-full object-cover"
+    >
+    <!-- Dark overlay -->
+    <div class="absolute inset-0 bg-black/85"></div>
+  </div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-10">
+
+    <div class="max-w-3xl mb-10 fade-up">
+      <p class="font-orbitron uppercase tracking-[0.24em] text-purple text-sm mb-4">
+        ABOUT US
+      </p>
+
+      <h2 class="font-orbitron text-3xl sm:text-4xl md:text-5xl font-black leading-[0.95]">
+        Built on
+        <span class="text-gold block">Fast Response.</span>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-5 items-stretch">
+
+      <div class="rounded-[2rem] overflow-hidden border border-white/10 min-h-[520px] fade-up">
+        <img
+          src="assets/garage.jpg"
+          alt="Garage service"
+          class="w-full h-full min-h-[520px] object-cover"
+        >
+      </div>
+
+      <div class="rounded-[2rem] border border-white/10 bg-[rgba(255,255,255,0.03)] p-8 md:p-10 min-h-[520px] flex flex-col justify-between fade-up">
+
+        <div>
+          <p class="text-white/75 text-base md:text-lg leading-relaxed">
+            Here at 3G, we offer fast, reliable garage door and gate service across DFW and surrounding areas, done right the first time. At 3G Garage & Gate, we proudly serve the entire DFW area with honest, dependable service you can trust. As a family-owned and locally operated company, our experienced technicians are trained to handle everything from garage door repairs and installations to gate service and opener replacements. With over 10 years of experience in the industry, we offer same-day service and 24/7 emergency repairs to keep your home or business secure and running smoothly. When you need knowledgeable, reliable professionals, 3G Garage & Gate is ready to get the job done.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
+
+          <div class="rounded-2xl border border-white/10 p-6 bg-[rgba(255,255,255,0.02)]">
+            <p class="font-orbitron text-gold text-2xl font-black">Fast</p>
+            <p class="mt-2 text-white/65 text-sm leading-relaxed">
+              Quick response times and dependable scheduling.
+            </p>
+          </div>
+
+          <div class="rounded-2xl border border-white/10 p-6 bg-[rgba(255,255,255,0.02)]">
+            <p class="font-orbitron text-gold text-2xl font-black">Clean</p>
+            <p class="mt-2 text-white/65 text-sm leading-relaxed">
+              Professional work with a polished end result.
+            </p>
+          </div>
+
+          <div class="rounded-2xl border border-white/10 p-6 bg-[rgba(255,255,255,0.02)]">
+            <p class="font-orbitron text-gold text-2xl font-black">Local</p>
+            <p class="mt-2 text-white/65 text-sm leading-relaxed">
+              Serving DFW with service you can count on.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+  <section id="services" class="bg-black py-24 overflow-hidden">
+
+  <!-- HEADER -->
+  <div class="text-center mb-20">
+    <h2 class="font-orbitron text-4xl md:text-5xl text-white tracking-[0.25em]">
+      VIEW OUR SERVICES
+    </h2>
+  </div>
+
+  <!-- SERVICES ROW -->
+<!-- SERVICES ROW -->
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
+
+  <!-- CARD -->
+  <div class="border-r border-white/10 transform -skew-x-6 px-8 py-16
+              transition-all duration-300
+              hover:bg-purple/10 hover:border-purple/40">
+
+    <div class="skew-x-6 text-center">
+
+      <div class="w-14 h-[3px] bg-gold mx-auto mb-8"></div>
+
+      <div class="text-4xl text-gold mb-8">
+        <i class="fa-solid fa-house"></i>
+      </div>
+
+      <h3 class="font-orbitron text-white text-xl tracking-[0.18em] uppercase mb-6">
+        Residential<br>Garage Doors
+      </h3>
+
+      <p class="text-white/70 text-sm leading-relaxed max-w-xs mx-auto">
+        Repair, spring replacement, new doors, tune-ups, panels,
+        windows, and full residential garage door service.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- CARD -->
+  <div class="border-r border-white/10 transform -skew-x-6 px-8 py-16
+              transition-all duration-300
+              hover:bg-purple/10 hover:border-purple/40">
+
+    <div class="skew-x-6 text-center">
+
+      <div class="w-14 h-[3px] bg-gold mx-auto mb-8"></div>
+
+      <div class="text-4xl text-gold mb-8">
+        <i class="fa-solid fa-warehouse"></i>
+      </div>
+
+      <h3 class="font-orbitron text-white text-xl tracking-[0.18em] uppercase mb-6">
+        Commercial<br>Doors & Docks
+      </h3>
+
+      <p class="text-white/70 text-sm leading-relaxed max-w-xs mx-auto">
+        Commercial overhead door repairs, replacements,
+        spring work, tune-ups, and dock door service.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- CARD -->
+  <div class="border-r border-white/10 transform -skew-x-6 px-8 py-16
+              transition-all duration-300
+              hover:bg-purple/10 hover:border-purple/40">
+
+    <div class="skew-x-6 text-center">
+
+      <div class="w-14 h-[3px] bg-gold mx-auto mb-8"></div>
+
+      <div class="text-4xl text-gold mb-8">
+        <i class="fa-solid fa-door-open"></i>
+      </div>
+
+      <h3 class="font-orbitron text-white text-xl tracking-[0.18em] uppercase mb-6">
+        Gates &<br>Access Control
+      </h3>
+
+      <p class="text-white/70 text-sm leading-relaxed max-w-xs mx-auto">
+        Gate repair, replacements, new builds,
+        pedestrian gates, and automated access systems.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- CARD -->
+  <div class="transform -skew-x-6 px-8 py-16
+              transition-all duration-300
+              hover:bg-purple/10 hover:border-purple/40">
+
+    <div class="skew-x-6 text-center">
+
+      <div class="w-14 h-[3px] bg-gold mx-auto mb-8"></div>
+
+      <div class="text-4xl text-gold mb-8">
+        <i class="fa-solid fa-screwdriver-wrench"></i>
+      </div>
+
+      <h3 class="font-orbitron text-white text-xl tracking-[0.18em] uppercase mb-6">
+        Openers<br>& Maintenance
+      </h3>
+
+      <p class="text-white/70 text-sm leading-relaxed max-w-xs mx-auto">
+        Opener repair and replacement, inspections,
+        estimates, maintenance, and diagnostics.
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+  <!-- BUTTON -->
+  <div class="flex justify-center mt-20">
+<a href="contact.html"
+   class="bg-gold text-black font-orbitron tracking-[0.2em] uppercase
+   px-14 py-5 transform -skew-x-12 hover:scale-105
+   hover:shadow-[0_0_35px_rgba(244,191,23,0.45)]
+   transition">
+
+  <span class="block skew-x-12">
+    Schedule Today
+  </span>
+
+</a>
+  </div>
+
+</section>
+
+<section id="work" class="relative py-24 overflow-hidden">
+
+  <!-- Background Image -->
+  <div class="absolute inset-0">
+    <img src="assets/work.jpg" class="w-full h-full object-cover">
+    <div class="absolute inset-0 bg-black/75"></div>
+  </div>
+
+  <div class="relative z-10 max-w-6xl mx-auto px-6 md:px-10 text-center">
+
+    <!-- Heading -->
+    <p class="font-orbitron uppercase tracking-[0.24em] text-purple text-sm mb-4 fade-up">
+      OUR WORK
+    </p>
+
+    <h2 class="font-orbitron text-3xl sm:text-4xl md:text-5xl font-black mb-6 fade-up">
+      See Our
+      <span class="text-gold block">Recent Projects</span>
+    </h2>
+
+    <!-- Description -->
+    <p class="text-white/70 text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-12 fade-up">
+      Take a look at some of the garage doors, gate systems, and installs we've completed
+      across the DFW area. Quality work, clean installs, and results our customers rely on.
+    </p>
+
+    <!-- Diamond Button -->
+ <!-- Horizontal Diamond Button -->
+<a href="gallery.html"
+   class="inline-block group fade-up">
+
+  <div class="bg-gold text-black font-orbitron font-bold tracking-[0.18em]
+              px-12 py-5 transform -skew-x-12
+              transition-all duration-300
+              group-hover:scale-105
+              group-hover:shadow-[0_0_40px_rgba(244,191,23,0.5)]">
+
+      <span class="block skew-x-12">
+        CHECK OUT OUR WORK →
+      </span>
+
+  </div>
+
+</a>
+
+  </div>
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script>
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const mobileLinks = document.querySelectorAll(".mobile-link");
+
+    if (menuBtn) {
+      menuBtn.addEventListener("click", () => {
+        const isOpen = mobileMenu.classList.contains("show-menu");
+        if (isOpen) {
+          mobileMenu.classList.remove("show-menu");
+          mobileMenu.classList.add("hidden-menu");
+          document.body.style.overflow = "";
+        } else {
+          mobileMenu.classList.remove("hidden-menu");
+          mobileMenu.classList.add("show-menu");
+          document.body.style.overflow = "hidden";
+        }
+      });
+    }
+
+    mobileLinks.forEach(link => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.remove("show-menu");
+        mobileMenu.classList.add("hidden-menu");
+        document.body.style.overflow = "";
+      });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in-view");
+        }
+      });
+    }, { threshold: 0.18 });
+
+    document.querySelectorAll(".fade-up").forEach(el => observer.observe(el));
+
+    const bgPurple = document.getElementById("bgPurple");
+    const bgGold = document.getElementById("bgGold");
+
+    function updateScrollBackground() {
+      const scrollTop = window.scrollY || window.pageYOffset;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? scrollTop / docHeight : 0;
+
+      let purpleOpacity = 0;
+      if (progress > 0.08) {
+        purpleOpacity = Math.min((progress - 0.08) / 0.22, 1);
+      }
+      if (progress > 0.52) {
+        purpleOpacity = Math.max(1 - ((progress - 0.52) / 0.22), 0.18);
+      }
+
+      let goldOpacity = 0;
+      if (progress > 0.45) {
+        goldOpacity = Math.min((progress - 0.45) / 0.28, 1);
+      }
+
+      bgPurple.style.opacity = purpleOpacity.toFixed(3);
+      bgGold.style.opacity = goldOpacity.toFixed(3);
+    }
+
+    window.addEventListener("scroll", updateScrollBackground, { passive: true });
+    window.addEventListener("load", updateScrollBackground);
+    window.addEventListener("resize", updateScrollBackground);
+  </script>
+<footer class="bg-ink text-white pt-20 pb-10 border-t border-white/10">
+
+  <div class="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-1 md:grid-cols-2 gap-12">
+
+    <!-- LEFT SIDE -->
+    <div>
+      <p class="font-orbitron tracking-[0.25em] text-sm text-white/60 mb-6">
+        QUICK LINKS
+      </p>
+
+      <ul class="space-y-4 text-white/70 text-lg">
+        <li><a href="index.html" class="hover:text-gold transition">Home</a></li>
+        <li><a href="#about" class="hover:text-gold transition">About</a></li>
+        <li><a href="#services" class="hover:text-gold transition">Services</a></li>
+        <li><a href="gallery.html" class="hover:text-gold transition">Gallery</a></li>
+        <li><a href="contact.html" class="hover:text-gold transition">Contact</a></li>
+      </ul>
+    </div>
+
+
+    <!-- RIGHT SIDE -->
+    <div class="text-left md:text-right">
+
+      <div class="mb-6">
+        <p class="font-orbitron text-2xl tracking-widest">
+          3G GARAGE
+        </p>
+        <p class="font-orbitron text-sm tracking-[0.35em] text-white/60">
+          & GATE SERVICES
+        </p>
+      </div>
+
+      <p class="text-white/65 max-w-md md:ml-auto leading-relaxed mb-6">
+        Professional garage door and gate repair services across the DFW area.
+        Fast response, clean installs, and reliable service you can count on.
+      </p>
+
+      <p class="text-white/70 mb-6">
+        Call / Text: <span class="text-gold">682-214-3934</span>
+      </p>
+
+      <!-- SOCIAL -->
+      <div class="flex md:justify-end gap-6 text-xl text-white/70">
+        <a href="#" class="hover:text-gold transition">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="#" class="hover:text-gold transition">
+          <i class="fab fa-tiktok"></i>
+        </a>
+        <a href="#" class="hover:text-gold transition">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- DIVIDER -->
+  <div class="max-w-7xl mx-auto px-6 md:px-10 mt-16 border-t border-white/10 pt-8 text-center">
+
+    <p class="text-white/50 text-sm tracking-widest">
+      © 2026 3G GARAGE & GATE SERVICES • ALL RIGHTS RESERVED
+    </p>
+
+    <p class="text-white/40 text-xs mt-2 tracking-widest">
+      CUSTOM CODED BY ECHELON
+    </p>
+
+    <!-- PAYMENT ICONS -->
+    <div class="flex justify-center gap-6 mt-8 opacity-60 text-white text-lg">
+      <i class="fab fa-cc-apple-pay"></i>
+      <i class="fab fa-cc-amex"></i>
+      <i class="fab fa-cc-mastercard"></i>
+      <i class="fab fa-cc-paypal"></i>
+      <i class="fab fa-cc-visa"></i>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+</html> 

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gallery | 3G Garage & Gate Services</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+tailwind.config = {
+theme:{
+extend:{
+colors:{
+gold:"#f4bf17",
+purple:"#6d28d9",
+ink:"#050505"
+},
+fontFamily:{
+orbitron:["Orbitron","sans-serif"],
+sans:["Inter","system-ui","sans-serif"]
+}
+}
+}
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+body{
+background:#050505;
+color:white;
+font-family:'Inter',sans-serif;
+overflow-x:hidden;
+}
+
+.gallery-card img{
+transition:transform .6s ease;
+}
+
+.gallery-card:hover img{
+transform:scale(1.06);
+}
+
+.diamond-btn{
+display:inline-block;
+transform:skewX(-14deg);
+}
+
+.diamond-btn span{
+display:block;
+transform:skewX(14deg);
+}
+
+.top-fade{
+background:linear-gradient(to bottom,rgba(5,5,5,0.85),rgba(5,5,5,0.30),rgba(5,5,5,0.75));
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- NAV -->
+
+<header class="absolute top-0 left-0 w-full z-50">
+<div class="max-w-7xl mx-auto px-6 md:px-10 py-6 flex items-center justify-between">
+
+<a href="index.html" class="font-orbitron text-white text-lg sm:text-xl tracking-[0.22em] uppercase">
+3G Garage
+</a>
+
+<nav class="hidden md:flex items-center gap-8 text-sm uppercase tracking-[0.18em] text-white/80">
+
+<a href="index.html" class="hover:text-gold transition">Home</a>
+<a href="index.html#about" class="hover:text-gold transition">About</a>
+<a href="index.html#services" class="hover:text-gold transition">Services</a>
+<a href="gallery.html" class="text-gold">Gallery</a>
+<a href="contact.html" class="hover:text-gold transition">Contact</a>
+
+</nav>
+
+</div>
+</header>
+
+
+<!-- HERO -->
+
+<section class="relative min-h-[72vh] flex items-center justify-center overflow-hidden">
+
+<div class="absolute inset-0">
+<img src="assets/11.jpg" class="w-full h-full object-cover">
+<div class="absolute inset-0 bg-black/70"></div>
+<div class="absolute inset-0 top-fade"></div>
+</div>
+
+<div class="relative z-10 w-full">
+<div class="max-w-4xl mx-auto text-center px-6 pt-32 pb-20">
+
+<p class="font-orbitron uppercase tracking-[0.30em] text-gold text-xs sm:text-sm mb-5">
+Project Gallery
+</p>
+
+<h1 class="font-orbitron text-4xl sm:text-5xl md:text-7xl font-black leading-[0.92]">
+Real Work.
+<span class="text-gold block">Clean Results.</span>
+</h1>
+
+<p class="mt-6 max-w-2xl mx-auto text-white/72 text-base md:text-lg leading-relaxed">
+Take a look at garage door repairs, gate installs, opener replacements,
+commercial work, and finished projects completed across DFW.
+</p>
+
+<div class="mt-10 flex flex-wrap gap-4 justify-center">
+
+<a href="#gallery"
+class="diamond-btn bg-gold text-black font-orbitron uppercase tracking-[0.16em] px-8 py-4 hover:scale-105 transition duration-300 hover:shadow-[0_0_35px_rgba(244,191,23,0.45)]">
+<span>View Projects</span>
+</a>
+
+<a href="contact.html"
+class="diamond-btn border border-white/20 text-white font-orbitron uppercase tracking-[0.16em] px-8 py-4 hover:border-purple/50 hover:bg-purple/10 transition duration-300">
+<span>Book Service</span>
+</a>
+
+</div>
+
+</div>
+</div>
+
+</section>
+
+
+
+<!-- GALLERY GRID -->
+
+<section id="gallery" class="py-24">
+
+<div class="max-w-7xl mx-auto px-6 md:px-10">
+
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+
+<a href="assets/1.jpg" class="gallery-card relative rounded-[2rem] overflow-hidden border border-white/10 min-h-[420px] block">
+<img src="assets/1.jpg" class="absolute inset-0 w-full h-full object-cover">
+</a>
+
+<a href="assets/2.jpg" class="gallery-card relative rounded-[2rem] overflow-hidden border border-white/10 min-h-[420px] block">
+<img src="assets/2.jpg" class="absolute inset-0 w-full h-full object-cover">
+</a>
+
+<a href="assets/3.jpg" class="gallery-card relative rounded-[2rem] overflow-hidden border border-white/10 min-h-[420px] block">
+<img src="assets/3.jpg" class="absolute inset-0 w-full h-full object-cover">
+</a>
+
+<a href="assets/4.jpg" class="gallery-card relative rounded-[2rem] overflow-hidden border border-white/10 min-h-[420px] block">
+<img src="assets/4.jpg" class="absolute inset-0 w-full h-full object-cover">
+</a>
+
+<a href="assets/5.jpg" class="gallery-card relative rounded-[2rem] overflow-hidden border border-white/10 min-h-[420px] block">
+<img src="assets/5.jpg" class="absolute inset-0 w-full h-full object-cover">
+</a>
+
+<a href="assets/6.jpg" class="gallery-card relative rounded-[2rem] overflow-hidden border border-white/10 min-h-[420px] block">
+<img src="assets/6.jpg" class="absolute inset-0 w-full h-full object-cover">
+</a>
+
+<a href="assets/7.jpg" class="gallery-card relative rounded-[2rem] overflow-hidden border border-white/10 min-h-[420px] block">
+<img src="assets/7.jpg" class="absolute inset-0 w-full h-full object-cover">
+</a>
+
+<a href="assets/8.jpg" class="gallery-card relative rounded-[2rem] overflow-hidden border border-white/10 min-h-[420px] block">
+<img src="assets/8.jpg" class="absolute inset-0 w-full h-full object-cover">
+</a>
+
+<a href="assets/9.jpg" class="gallery-card relative rounded-[2rem] overflow-hidden border border-white/10 min-h-[420px] block">
+<img src="assets/9.jpg" class="absolute inset-0 w-full h-full object-cover">
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- CTA -->
+
+<section class="pb-24">
+
+<div class="max-w-7xl mx-auto px-6 md:px-10">
+
+<div class="rounded-[2rem] border border-white/10 bg-[rgba(255,255,255,0.03)] p-10 md:p-14 text-center">
+
+<p class="font-orbitron uppercase tracking-[0.24em] text-purple text-sm mb-4">
+Need Service?
+</p>
+
+<h2 class="font-orbitron text-3xl sm:text-4xl md:text-5xl font-black leading-[0.95] mb-6">
+Garage Doors
+<span class="text-gold block">Or Gate Repairs</span>
+</h2>
+
+<p class="max-w-2xl mx-auto text-white/70 text-base md:text-lg leading-relaxed mb-10">
+Fast response, professional repairs, and reliable installs across DFW.
+3G Garage & Gate Services is ready to help.
+</p>
+
+<a href="contact.html"
+class="diamond-btn bg-gold text-black font-orbitron uppercase tracking-[0.16em] px-10 py-5 hover:scale-105 transition duration-300 hover:shadow-[0_0_35px_rgba(244,191,23,0.45)]">
+<span>Schedule Service</span>
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- FOOTER -->
+
+<footer class="bg-ink text-white pt-20 pb-10 border-t border-white/10">
+
+<div class="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-1 md:grid-cols-2 gap-12">
+
+<div>
+
+<p class="font-orbitron tracking-[0.25em] text-sm text-white/60 mb-6">
+QUICK LINKS
+</p>
+
+<ul class="space-y-4 text-white/70 text-lg">
+
+<li><a href="index.html" class="hover:text-gold transition">Home</a></li>
+<li><a href="index.html#about" class="hover:text-gold transition">About</a></li>
+<li><a href="index.html#services" class="hover:text-gold transition">Services</a></li>
+<li><a href="gallery.html" class="text-gold">Gallery</a></li>
+<li><a href="contact.html" class="hover:text-gold transition">Contact</a></li>
+
+</ul>
+
+</div>
+
+<div class="text-left md:text-right">
+
+<div class="mb-6">
+<p class="font-orbitron text-2xl tracking-widest">
+3G GARAGE
+</p>
+<p class="font-orbitron text-sm tracking-[0.35em] text-white/60">
+& GATE SERVICES
+</p>
+</div>
+
+<p class="text-white/65 max-w-md md:ml-auto leading-relaxed mb-6">
+Professional garage door and gate repair services across the DFW area.
+Fast response, clean installs, and reliable service you can count on.
+</p>
+
+<p class="text-white/70 mb-6">
+Call / Text: <span class="text-gold">682-214-3934</span>
+</p>
+
+<div class="flex md:justify-end gap-6 text-xl text-white/70">
+<a href="#" class="hover:text-gold transition"><i class="fab fa-instagram"></i></a>
+<a href="#" class="hover:text-gold transition"><i class="fab fa-tiktok"></i></a>
+<a href="#" class="hover:text-gold transition"><i class="fab fa-facebook-f"></i></a>
+</div>
+
+</div>
+
+</div>
+
+<div class="max-w-7xl mx-auto px-6 md:px-10 mt-16 border-t border-white/10 pt-8 text-center">
+
+<p class="text-white/50 text-sm tracking-widest">
+© 2026 3G GARAGE & GATE SERVICES • ALL RIGHTS RESERVED
+</p>
+
+<p class="text-white/40 text-xs mt-2 tracking-widest">
+CUSTOM CODED BY ECHELON
+</p>
+
+</div>
+
+</footer>
+
+</body>
+</html>
